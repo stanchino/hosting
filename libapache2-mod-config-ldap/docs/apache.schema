@@ -1,0 +1,1627 @@
+#
+# Hostmade Apache Schema v1.0
+# based on
+# ldapv3 directory schema
+#
+#
+# Created by: Stanimir V. Dimitrov <stanchino at gmail dot com>
+#
+#
+# This schema depends on:
+#	- core.schema
+#	- cosine.schema
+#	- nis.schema
+#
+
+# Attribute Type Definitions
+
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.1 NAME 'ApacheRawArg'
+	DESC 'Syntax: RawArg ApacheArg [options]'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.1 NAME 'ApacheConfigObj'
+	DESC 'Contains configuration directives for Config'
+	AUXILIARY
+	MAY ApacheRawArg )
+
+####################
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.2 NAME 'ApacheSectionName'
+	DESC 'Syntax: Specifies name of section: <name></name>'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.3 NAME 'ApacheSectionArg'
+	DESC 'Syntax: Optional argument to be used in section'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.2 NAME 'ApacheSectionObj'
+	DESC 'Contains configuration directives for Section'
+	SUP ApacheConfigObj AUXILIARY
+	MUST ( ApacheSectionName $ ApacheSectionArg ) )
+
+####################
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.4 NAME 'ApacheAcceptFilter'
+	DESC 'Syntax: AcceptFilter on|off'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.5 NAME 'ApacheAcceptMutex'
+	DESC 'Syntax: AcceptMutex uslock|pthread|sysvsem|fcntl|flock|os2sem|tpfcore|none|default'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.6 NAME 'ApacheAccessConfig'
+	DESC 'Syntax: AccessConfig file-path|directory-path'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.7 NAME 'ApacheAccessFileName'
+	DESC 'Syntax: AccessFileName filename [filename] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.8 NAME 'ApacheAddDefaultCharset'
+	DESC 'Syntax: AddDefaultCharset On|Off|charset'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.9 NAME 'ApacheAddModule'
+	DESC 'Syntax: AddModule module [module] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.10 NAME 'ApacheAllowOverride'
+	DESC 'Syntax: AllowOverride All|None|directive-type [directive-type] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.11 NAME 'ApacheAuthName'
+	DESC 'Syntax: AuthName auth-domain'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.12 NAME 'ApacheAuthType'
+	DESC 'Syntax: AuthType Basic|Digest'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.13 NAME 'ApacheBS2000Account'
+	DESC 'Syntax: BS2000Account account'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.14 NAME 'ApacheBindAddress'
+	DESC 'Syntax: BindAddress *|IP-address|domain-name'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.15 NAME 'ApacheClearModuleList'
+	DESC 'Syntax: ClearModuleList'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.16 NAME 'ApacheContentDigest'
+	DESC 'Syntax: ContentDigest on|off'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.17 NAME 'ApacheCoreDumpDirectory'
+	DESC 'Syntax: CoreDumpDirectory directory-path'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.18 NAME 'ApacheDefaultType'
+	DESC 'Syntax: DefaultType MIME-type'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.19 NAME 'ApacheDocumentRoot'
+	DESC 'Syntax: DocumentRoot directory-path'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.20 NAME 'ApacheEBCDICConvert'
+	DESC 'Syntax: EBCDICConvert On|Off[=direction] extension [extension] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.21 NAME 'ApacheEBCDICConvertByType'
+	DESC 'Syntax: EBCDICConvertByType On|Off[=direction] mimetype [mimetype] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.22 NAME 'ApacheEBCDICKludge'
+	DESC 'Syntax: EBCDICKludge On|Off'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.23 NAME 'ApacheErrorDocument'
+	DESC 'Syntax: ErrorDocument error-code document'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.24 NAME 'ApacheErrorLog'
+	DESC 'Syntax: ErrorLog file-path|syslog[:facility] '
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.25 NAME 'ApacheFileETag'
+	DESC 'Syntax: FileETag component ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.26 NAME 'ApacheGroup'
+	DESC 'Syntax: Group unix-group'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.27 NAME 'ApacheHostnameLookups'
+	DESC 'Syntax: HostnameLookups on|off|double'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.28 NAME 'ApacheIdentityCheck'
+	DESC 'Syntax: IdentityCheck on|off'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.29 NAME 'ApacheInclude'
+	DESC 'Syntax: Include file-path|directory-path'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.30 NAME 'ApacheKeepAlive'
+	DESC 'Syntax: KeepAlive on|off'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.31 NAME 'ApacheKeepAliveTimeout'
+	DESC 'Syntax: KeepAliveTimeout seconds'
+	EQUALITY integerMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.32 NAME 'ApacheLimitRequestBody'
+	DESC 'Syntax: LimitRequestBody bytes'
+	EQUALITY integerMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.33 NAME 'ApacheLimitRequestFields'
+	DESC 'Syntax: LimitRequestFields number'
+	EQUALITY integerMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.34 NAME 'ApacheLimitRequestFieldsize'
+	DESC 'Syntax: LimitRequestFieldsize bytes'
+	EQUALITY integerMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.35 NAME 'ApacheLimitRequestLine'
+	DESC 'Syntax: LimitRequestLine bytes'
+	EQUALITY integerMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.36 NAME 'ApacheListen'
+	DESC 'Syntax: Listen [IP-address:]port'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.37 NAME 'ApacheListenBacklog'
+	DESC 'Syntax: ListenBacklog backlog'
+	EQUALITY integerMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.38 NAME 'ApacheLockFile'
+	DESC 'Syntax: LockFile file-path'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.39 NAME 'ApacheLogLevel'
+	DESC 'Syntax: LogLevel level'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.40 NAME 'ApacheMaxClients'
+	DESC 'Syntax: MaxClients number'
+	EQUALITY integerMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.41 NAME 'ApacheMaxKeepAliveRequests'
+	DESC 'Syntax: MaxKeepAliveRequests number'
+	EQUALITY integerMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.42 NAME 'ApacheMaxRequestsPerChild'
+	DESC 'Syntax: MaxRequestsPerChild number'
+	EQUALITY integerMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.43 NAME 'ApacheMaxSpareServers'
+	DESC 'Syntax: MaxSpareServers number'
+	EQUALITY integerMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.44 NAME 'ApacheMinSpareServers'
+	DESC 'Syntax: MinSpareServers number'
+	EQUALITY integerMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.45 NAME 'ApacheNameVirtualHost'
+	DESC 'Syntax: NameVirtualHost addr[:port]'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.46 NAME 'ApacheOptions'
+	DESC 'Syntax: Options [+|-]option [[+|-]option] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.47 NAME 'ApachePidFile'
+	DESC 'Syntax: PidFile file-path'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.48 NAME 'ApachePort'
+	DESC 'Syntax: Port number'
+	EQUALITY integerMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.49 NAME 'ApacheRLimitCPU'
+	DESC 'Syntax: RLimitCPU number|max [number|max] '
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.50 NAME 'ApacheRLimitMEM'
+	DESC 'Syntax: RLimitMEM number|max [number|max]'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.51 NAME 'ApacheRLimitNPROC'
+	DESC 'Syntax: RLimitNPROC number|max [number|max]'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.52 NAME 'ApacheRequire'
+	DESC 'Syntax: Require entity-name [entity-name] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.53 NAME 'ApacheResourceConfig'
+	DESC 'Syntax: ResourceConfig file-path|directory-path'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.54 NAME 'ApacheSatisfy'
+	DESC 'Syntax: Satisfy any|all'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.55 NAME 'ApacheScoreBoardFile'
+	DESC 'Syntax: ScoreBoardFile file-path'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.56 NAME 'ApacheScriptInterpreterSource'
+	DESC 'Syntax: ScriptInterpreterSource registry|script'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.57 NAME 'ApacheSendBufferSize'
+	DESC 'Syntax: SendBufferSize bytes'
+	EQUALITY integerMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.58 NAME 'ApacheServerAdmin'
+	DESC 'Syntax: ServerAdmin email-address'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.59 NAME 'ApacheServerAlias'
+	DESC 'Syntax: ServerAlias hostname [hostname] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.60 NAME 'ApacheServerName'
+	DESC 'Syntax: ServerName fully-qualified-domain-name '
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.61 NAME 'ApacheServerPath'
+	DESC 'Syntax: ServerPath directory-path'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.62 NAME 'ApacheServerRoot'
+	DESC 'Syntax: ServerRoot directory-path'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.63 NAME 'ApacheServerSignature'
+	DESC 'Syntax: ServerSignature On|Off|EMail'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.64 NAME 'ApacheServerTokens'
+	DESC 'Syntax: ServerTokens Minimal|ProductOnly|OS|Full'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.65 NAME 'ApacheServerType'
+	DESC 'Syntax: ServerType type'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.66 NAME 'ApacheStartServers'
+	DESC 'Syntax: StartServers number'
+	EQUALITY integerMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.67 NAME 'ApacheThreadsPerChild'
+	DESC 'Syntax: ThreadsPerChild number'
+	EQUALITY integerMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.68 NAME 'ApacheThreadStackSize'
+	DESC 'Syntax: ThreadStackSize number'
+	EQUALITY integerMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.69 NAME 'ApacheTimeOut'
+	DESC 'Syntax: TimeOut number'
+	EQUALITY integerMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.70 NAME 'ApacheUseCanonicalName'
+	DESC 'Syntax: UseCanonicalName on|off|dns'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.71 NAME 'ApacheUser'
+	DESC 'Syntax: User unix-userid'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.3 NAME 'ApacheModCoreObj'
+	DESC 'Contains configuration directives for mod_core'
+	SUP ApacheConfigObj AUXILIARY
+	MAY ( ApacheAcceptFilter $ ApacheAcceptMutex $ ApacheAccessConfig $
+		 ApacheAccessFileName $ ApacheAddDefaultCharset $ ApacheAddModule $
+		 ApacheAllowOverride $ ApacheAuthName $ ApacheAuthType $
+		 ApacheBS2000Account $ ApacheBindAddress $ ApacheClearModuleList $
+		 ApacheContentDigest $ ApacheCoreDumpDirectory $ ApacheDefaultType $
+		 ApacheDocumentRoot $ ApacheEBCDICConvert $ ApacheEBCDICConvertByType $
+		 ApacheEBCDICKludge $ ApacheErrorDocument $ ApacheErrorLog $
+		 ApacheFileETag $ ApacheGroup $ ApacheHostnameLookups $
+		 ApacheIdentityCheck $ ApacheInclude $ ApacheKeepAlive $
+		 ApacheKeepAliveTimeout $ ApacheLimitRequestBody $ ApacheLimitRequestFields $
+		 ApacheLimitRequestFieldsize $ ApacheLimitRequestLine $ ApacheListen $
+		 ApacheListenBacklog $ ApacheLockFile $ ApacheLogLevel $
+		 ApacheMaxClients $ ApacheMaxKeepAliveRequests $ ApacheMaxRequestsPerChild $
+		 ApacheMaxSpareServers $ ApacheMinSpareServers $ ApacheNameVirtualHost $
+		 ApacheOptions $ ApachePidFile $ ApachePort $
+		 ApacheRLimitCPU $ ApacheRLimitMEM $ ApacheRLimitNPROC $
+		 ApacheRequire $ ApacheResourceConfig $ ApacheSatisfy $
+		 ApacheScoreBoardFile $ ApacheScriptInterpreterSource $ ApacheSendBufferSize $
+		 ApacheServerAdmin $ ApacheServerAlias $ ApacheServerName $
+		 ApacheServerPath $ ApacheServerRoot $ ApacheServerSignature $
+		 ApacheServerTokens $ ApacheServerType $ ApacheStartServers $
+		 ApacheThreadsPerChild $ ApacheThreadStackSize $ ApacheTimeOut $
+		 ApacheUseCanonicalName $ ApacheUser ) )
+
+####################
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.4 NAME 'ApacheHTAccessObj'
+	DESC 'Contains configuration directives for htaccess'
+	SUP ApacheModCoreObj AUXILIARY
+	MAY ( ApacheAddDefaultCharset $ ApacheAuthName $ ApacheAuthType $
+		 ApacheContentDigest $ ApacheDefaultType $ ApacheEBCDICConvert $
+		 ApacheEBCDICConvertByType $ ApacheEBCDICKludge $ ApacheErrorDocument $
+		 ApacheFileETag $ ApacheLimitRequestBody $ ApacheOptions $
+		 ApacheRequire $ ApacheSatisfy $ ApacheScriptInterpreterSource $
+		 ApacheServerSignature ) )
+
+####################
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.5 NAME 'ApacheDirectoryObj'
+	DESC 'Contains configuration directives for directory'
+	SUP ApacheModCoreObj AUXILIARY
+	MAY ( ApacheAddDefaultCharset $ ApacheAllowOverride $ ApacheAuthName $
+		 ApacheAuthType $ ApacheContentDigest $ ApacheDefaultType $
+		 ApacheEBCDICConvert $ ApacheEBCDICConvertByType $ ApacheEBCDICKludge $
+		 ApacheErrorDocument $ ApacheFileETag $ ApacheHostnameLookups $
+		 ApacheIdentityCheck $ ApacheLimitRequestBody $ ApacheOptions $
+		 ApacheRequire $ ApacheSatisfy $ ApacheScriptInterpreterSource $
+		 ApacheServerSignature $ ApacheUseCanonicalName ) )
+
+####################
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.6 NAME 'ApacheServerConfigObj'
+	DESC 'Contains configuration directives for serverconfig'
+	SUP ApacheModCoreObj AUXILIARY
+	MAY ( ApacheAcceptFilter $ ApacheAcceptMutex $ ApacheAccessConfig $
+		 ApacheAccessFileName $ ApacheAddDefaultCharset $ ApacheAddModule $
+		 ApacheBS2000Account $ ApacheBindAddress $ ApacheClearModuleList $
+		 ApacheContentDigest $ ApacheCoreDumpDirectory $ ApacheDefaultType $
+		 ApacheDocumentRoot $ ApacheEBCDICConvert $ ApacheEBCDICConvertByType $
+		 ApacheEBCDICKludge $ ApacheErrorDocument $ ApacheErrorLog $
+		 ApacheFileETag $ ApacheGroup $ ApacheHostnameLookups $
+		 ApacheIdentityCheck $ ApacheInclude $ ApacheKeepAlive $
+		 ApacheKeepAliveTimeout $ ApacheLimitRequestBody $ ApacheLimitRequestFields $
+		 ApacheLimitRequestFieldsize $ ApacheLimitRequestLine $ ApacheListen $
+		 ApacheListenBacklog $ ApacheLockFile $ ApacheLogLevel $
+		 ApacheMaxClients $ ApacheMaxKeepAliveRequests $ ApacheMaxRequestsPerChild $
+		 ApacheMaxSpareServers $ ApacheMinSpareServers $ ApacheNameVirtualHost $
+		 ApacheOptions $ ApachePidFile $ ApachePort $
+		 ApacheRLimitCPU $ ApacheRLimitMEM $ ApacheRLimitNPROC $
+		 ApacheResourceConfig $ ApacheScoreBoardFile $ ApacheSendBufferSize $
+		 ApacheServerAdmin $ ApacheServerName $ ApacheServerRoot $
+		 ApacheServerSignature $ ApacheServerTokens $ ApacheServerType $
+		 ApacheStartServers $ ApacheThreadStackSize $ ApacheThreadsPerChild $
+		 ApacheTimeOut $ ApacheUseCanonicalName $ ApacheUser ) )
+
+####################
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.7 NAME 'ApacheVirtualHostObj'
+	DESC 'Contains configuration directives for VirtualHost'
+	SUP ApacheModCoreObj AUXILIARY
+	MUST ( ApacheServerName )
+	MAY ( ApacheAccessConfig $ ApacheAccessFileName $ ApacheAddDefaultCharset $
+		 ApacheContentDigest $ ApacheDefaultType $ ApacheDocumentRoot $
+		 ApacheEBCDICConvert $ ApacheEBCDICConvertByType $ ApacheEBCDICKludge $
+		 ApacheErrorDocument $ ApacheErrorLog $ ApacheFileETag $
+		 ApacheGroup $ ApacheHostnameLookups $ ApacheIdentityCheck $
+		 ApacheLimitRequestBody $ ApacheLogLevel $ ApacheOptions $
+		 ApacheRLimitCPU $ ApacheRLimitMEM $ ApacheRLimitNPROC $
+		 ApacheResourceConfig $ ApacheServerAdmin $ ApacheServerAlias $
+		 ApacheServerPath $ ApacheServerSignature $
+		 ApacheUseCanonicalName $ ApacheUser ) )
+
+####################
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.72 NAME 'ApacheAllow'
+	DESC 'Syntax: Allow from all|host|env=env-variable [host|env=env-variable] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.73 NAME 'ApacheDeny'
+	DESC 'Syntax: Deny from all|host|env=env-variable [host|env=env-variable] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.74 NAME 'ApacheOrder'
+	DESC 'Syntax: Order ordering'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.8 NAME 'ApacheModAccessObj'
+	DESC 'Contains configuration directives for mod_access'
+	SUP ApacheConfigObj AUXILIARY
+	MAY ( ApacheAllow $ ApacheDeny $ ApacheOrder ) )
+
+####################
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.75 NAME 'ApacheAction'
+	DESC 'Syntax: Action action-type cgi-script'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.76 NAME 'ApacheScript'
+	DESC 'Syntax: Script method cgi-script'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.9 NAME 'ApacheModActionsObj'
+	DESC 'Contains configuration directives for mod_actions'
+	SUP ApacheConfigObj AUXILIARY
+	MAY ( ApacheAction $ ApacheScript ) )
+
+####################
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.77 NAME 'ApacheAlias'
+	DESC 'Syntax: Alias URL-path file-path|directory-path'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.78 NAME 'ApacheAliasMatch'
+	DESC 'Syntax: AliasMatch regex file-path|directory-path'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.79 NAME 'ApacheRedirect'
+	DESC 'Syntax: Redirect [status] URL-path URL'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.80 NAME 'ApacheRedirectMatch'
+	DESC 'Syntax: RedirectMatch [status] regex URL'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.81 NAME 'ApacheRedirectPermanent'
+	DESC 'Syntax: RedirectPermanent URL-path URL'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.82 NAME 'ApacheRedirectTemp'
+	DESC 'Syntax: RedirectTemp URL-path URL'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.83 NAME 'ApacheScriptAlias'
+	DESC 'Syntax: ScriptAlias URL-path file-path|directory-path'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.84 NAME 'ApacheScriptAliasMatch'
+	DESC 'Syntax: ScriptAliasMatch regex file-path|directory-path'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.10 NAME 'ApacheModAliasObj'
+	DESC 'Contains configuration directives for mod_alias'
+	SUP ApacheConfigObj AUXILIARY
+	MAY ( ApacheAlias $ ApacheAliasMatch $ ApacheRedirect $
+		 ApacheRedirectMatch $ ApacheRedirectPermanent $ ApacheRedirectTemp $
+		 ApacheScriptAlias $ ApacheScriptAliasMatch ) )
+
+####################
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.85 NAME 'ApacheAuthAuthoritative'
+	DESC 'Syntax: AuthAuthoritative on|off'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.86 NAME 'ApacheAuthGroupFile'
+	DESC 'Syntax: AuthGroupFile file-path'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.87 NAME 'ApacheAuthUserFile'
+	DESC 'Syntax: AuthUserFile file-path'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.11 NAME 'ApacheModAuthObj'
+	DESC 'Contains configuration directives for mod_auth'
+	SUP ApacheConfigObj AUXILIARY
+	MAY ( ApacheAuthAuthoritative $ ApacheAuthGroupFile $ ApacheAuthUserFile ) )
+
+####################
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.88 NAME 'ApacheAnonymous'
+	DESC 'Syntax: Anonymous user  [user] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.89 NAME 'ApacheAnonymous--Authoritative'
+	DESC 'Syntax: Anonymous_Authoritative on|off'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.90 NAME 'ApacheAnonymous--LogEmail'
+	DESC 'Syntax: Anonymous_LogEmail on'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.91 NAME 'ApacheAnonymous--MustGiveEmail'
+	DESC 'Syntax: Anonymous_MustGiveEmail on'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.92 NAME 'ApacheAnonymous--NoUserID'
+	DESC 'Syntax: Anonymous_NoUserID on|off'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.93 NAME 'ApacheAnonymous--VerifyEmail'
+	DESC 'Syntax: Anonymous_VerifyEmail on|off'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.12 NAME 'ApacheModAuthAnonObj'
+	DESC 'Contains configuration directives for mod_auth_anon'
+	SUP ApacheConfigObj AUXILIARY
+	MAY ( ApacheAnonymous $ ApacheAnonymous--Authoritative $ ApacheAnonymous--LogEmail $
+		 ApacheAnonymous--MustGiveEmail $ ApacheAnonymous--NoUserID $ ApacheAnonymous--VerifyEmail ) )
+
+####################
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.94 NAME 'ApacheAuthDBAuthoritative'
+	DESC 'Syntax: AuthDBAuthoritative on|off'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.95 NAME 'ApacheAuthDBGroupFile'
+	DESC 'Syntax: AuthDBGroupFile file-path'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.96 NAME 'ApacheAuthDBUserFile'
+	DESC 'Syntax: AuthDBUserFile file-path '
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.13 NAME 'ApacheModAuthDbObj'
+	DESC 'Contains configuration directives for mod_auth_db'
+	SUP ApacheConfigObj AUXILIARY
+	MAY ( ApacheAuthDBAuthoritative $ ApacheAuthDBGroupFile $ ApacheAuthDBUserFile ) )
+
+####################
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.97 NAME 'ApacheAuthDBMAuthoritative'
+	DESC 'Syntax: AuthDBMAuthoritative on|off'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.98 NAME 'ApacheAuthDBMGroupFile'
+	DESC 'Syntax: AuthDBMGroupFile file-path'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.99 NAME 'ApacheAuthDBMUserFile'
+	DESC 'Syntax: AuthDBMUserFile file-path'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.14 NAME 'ApacheModAuthDbmObj'
+	DESC 'Contains configuration directives for mod_auth_dbm'
+	SUP ApacheConfigObj AUXILIARY
+	MAY ( ApacheAuthDBMAuthoritative $ ApacheAuthDBMGroupFile $ ApacheAuthDBMUserFile ) )
+
+####################
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.100 NAME 'ApacheAddAlt'
+	DESC 'Syntax: AddAlt string file [file] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.101 NAME 'ApacheAddAltByEncoding'
+	DESC 'Syntax: AddAltByEncoding string MIME-encoding [MIME-encoding] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.102 NAME 'ApacheAddAltByType'
+	DESC 'Syntax: AddAltByType string MIME-type [MIME-type] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.103 NAME 'ApacheAddDescription'
+	DESC 'Syntax: AddDescription string file [file] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.104 NAME 'ApacheAddIcon'
+	DESC 'Syntax: AddIcon icon name [name] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.105 NAME 'ApacheAddIconByEncoding'
+	DESC 'Syntax: AddIconByEncoding icon MIME-encoding [MIME-encoding] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.106 NAME 'ApacheAddIconByType'
+	DESC 'Syntax: AddIconByType icon MIME-type [MIME-type] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.107 NAME 'ApacheDefaultIcon'
+	DESC 'Syntax: DefaultIcon url'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.108 NAME 'ApacheFancyIndexing'
+	DESC 'Syntax: FancyIndexing on|off'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.109 NAME 'ApacheHeaderName'
+	DESC 'Syntax: HeaderName filename'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.110 NAME 'ApacheIndexIgnore'
+	DESC 'Syntax: IndexIgnore file [file] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.111 NAME 'ApacheIndexOptions'
+	DESC 'Syntax: IndexOptions [+|-]option [[+|-]option] ... (Apache 1.3.3 and later) '
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.112 NAME 'ApacheIndexOrderDefault'
+	DESC 'Syntax: IndexOrderDefault Ascending|Descending Name|Date|Size|Description '
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.113 NAME 'ApacheReadmeName'
+	DESC 'Syntax: ReadmeName filename'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.15 NAME 'ApacheModAutoindexObj'
+	DESC 'Contains configuration directives for mod_autoindex'
+	SUP ApacheConfigObj AUXILIARY
+	MAY ( ApacheAddAlt $ ApacheAddAltByEncoding $ ApacheAddAltByType $
+		 ApacheAddDescription $ ApacheAddIcon $ ApacheAddIconByEncoding $
+		 ApacheAddIconByType $ ApacheDefaultIcon $ ApacheFancyIndexing $
+		 ApacheHeaderName $ ApacheIndexIgnore $ ApacheIndexOptions $
+		 ApacheIndexOrderDefault $ ApacheReadmeName ) )
+
+####################
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.114 NAME 'ApacheMetaDir'
+	DESC 'Syntax: MetaDir directory'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.115 NAME 'ApacheMetaFiles'
+	DESC 'Syntax: MetaFiles on|off'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.116 NAME 'ApacheMetaSuffix'
+	DESC 'Syntax: MetaSuffix suffix'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.16 NAME 'ApacheModCernMetaObj'
+	DESC 'Contains configuration directives for mod_cern_meta'
+	SUP ApacheConfigObj AUXILIARY
+	MAY ( ApacheMetaDir $ ApacheMetaFiles $ ApacheMetaSuffix ) )
+
+####################
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.117 NAME 'ApacheScriptLog'
+	DESC 'Syntax: ScriptLog filename'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.118 NAME 'ApacheScriptLogBuffer'
+	DESC 'Syntax: ScriptLogBuffer bytes'
+	EQUALITY integerMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.119 NAME 'ApacheScriptLogLength'
+	DESC 'Syntax: ScriptLogLength bytes'
+	EQUALITY integerMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.17 NAME 'ApacheModCgiObj'
+	DESC 'Contains configuration directives for mod_cgi'
+	SUP ApacheConfigObj AUXILIARY
+	MAY ( ApacheScriptLog $ ApacheScriptLogBuffer $ ApacheScriptLogLength ) )
+
+####################
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.120 NAME 'ApacheCookieLog'
+	DESC 'Syntax: CookieLog filename'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.18 NAME 'ApacheModCookiesObj'
+	DESC 'Contains configuration directives for mod_cookies'
+	SUP ApacheConfigObj AUXILIARY
+	MAY ApacheCookieLog )
+
+####################
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.121 NAME 'ApacheAuthDigestFile'
+	DESC 'Syntax: AuthDigestFile filename'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.19 NAME 'ApacheModDigestObj'
+	DESC 'Contains configuration directives for mod_digest'
+	SUP ApacheConfigObj AUXILIARY
+	MAY ApacheAuthDigestFile )
+
+####################
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.122 NAME 'ApacheDirectoryIndex'
+	DESC 'Syntax: DirectoryIndex local-url [local-url] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.20 NAME 'ApacheModDirObj'
+	DESC 'Contains configuration directives for mod_dir'
+	SUP ApacheConfigObj AUXILIARY
+	MAY ApacheDirectoryIndex )
+
+####################
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.123 NAME 'ApachePassEnv'
+	DESC 'Syntax: PassEnv env-variable [env-variable] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.124 NAME 'ApacheSetEnv'
+	DESC 'Syntax: SetEnv env-variable value'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.125 NAME 'ApacheUnsetEnv'
+	DESC 'Syntax: UnsetEnv env-variable [env-variable] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.21 NAME 'ApacheModEnvObj'
+	DESC 'Contains configuration directives for mod_env'
+	SUP ApacheConfigObj AUXILIARY
+	MAY ( ApachePassEnv $ ApacheSetEnv $ ApacheUnsetEnv ) )
+
+####################
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.126 NAME 'ApacheExample'
+	DESC 'Syntax: Example'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.22 NAME 'ApacheModExampleObj'
+	DESC 'Contains configuration directives for mod_example'
+	SUP ApacheConfigObj AUXILIARY
+	MAY ApacheExample )
+
+####################
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.127 NAME 'ApacheExpiresActive'
+	DESC 'Syntax: ExpiresActive on|off'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.128 NAME 'ApacheExpiresByType'
+	DESC 'Syntax: ExpiresByType mime-type <code>seconds'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.129 NAME 'ApacheExpiresDefault'
+	DESC 'Syntax: ExpiresDefault <code>seconds'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.23 NAME 'ApacheModExpiresObj'
+	DESC 'Contains configuration directives for mod_expires'
+	SUP ApacheConfigObj AUXILIARY
+	MAY ( ApacheExpiresActive $ ApacheExpiresByType $ ApacheExpiresDefault ) )
+
+####################
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.130 NAME 'ApacheHeader'
+	DESC 'Syntax: Header unset header'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.24 NAME 'ApacheModHeadersObj'
+	DESC 'Contains configuration directives for mod_headers'
+	SUP ApacheConfigObj AUXILIARY
+	MAY ApacheHeader )
+
+####################
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.131 NAME 'ApacheImapBase'
+	DESC 'Syntax: ImapBase map|referer|URL'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.132 NAME 'ApacheImapDefault'
+	DESC 'Syntax: ImapDefault error|nocontent|map|referer|URL'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.133 NAME 'ApacheImapMenu'
+	DESC 'Syntax: ImapMenu none|formatted|semiformatted|unformatted'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.25 NAME 'ApacheModImapObj'
+	DESC 'Contains configuration directives for mod_imap'
+	SUP ApacheConfigObj AUXILIARY
+	MAY ( ApacheImapBase $ ApacheImapDefault $ ApacheImapMenu ) )
+
+####################
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.134 NAME 'ApacheXBitHack'
+	DESC 'Syntax: XBitHack on|off|full'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.26 NAME 'ApacheModIncludeObj'
+	DESC 'Contains configuration directives for mod_include'
+	SUP ApacheConfigObj AUXILIARY
+	MAY ApacheXBitHack )
+
+####################
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.135 NAME 'ApacheAddModuleInfo'
+	DESC 'Syntax: AddModuleInfo module-name string'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.27 NAME 'ApacheModInfoObj'
+	DESC 'Contains configuration directives for mod_info'
+	SUP ApacheConfigObj AUXILIARY
+	MAY ApacheAddModuleInfo )
+
+####################
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.136 NAME 'ApacheISAPIAppendLogToErrors'
+	DESC 'Syntax: ISAPIAppendLogToErrors on|off'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.137 NAME 'ApacheISAPIAppendLogToQuery'
+	DESC 'Syntax: ISAPIAppendLogToQuery on|off'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.138 NAME 'ApacheISAPILogNotSupported'
+	DESC 'Syntax: ISAPILogNotSupported on|off'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.139 NAME 'ApacheISAPIReadAheadBuffer'
+	DESC 'Syntax: ISAPIReadAheadBuffer size'
+	EQUALITY integerMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.28 NAME 'ApacheModIsapiObj'
+	DESC 'Contains configuration directives for mod_isapi'
+	SUP ApacheConfigObj AUXILIARY
+	MAY ( ApacheISAPIAppendLogToErrors $ ApacheISAPIAppendLogToQuery $ ApacheISAPILogNotSupported $
+		 ApacheISAPIReadAheadBuffer ) )
+
+####################
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.140 NAME 'ApacheAgentLog'
+	DESC 'Syntax: AgentLog file-pipe'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.29 NAME 'ApacheModLogAgentObj'
+	DESC 'Contains configuration directives for mod_log_agent'
+	SUP ApacheConfigObj AUXILIARY
+	MAY ApacheAgentLog )
+
+####################
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.141 NAME 'ApacheCustomLog'
+	DESC 'Syntax: CustomLog file|pipe format|nickname [env=[!]environment-variable]'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.142 NAME 'ApacheLogFormat'
+	DESC 'Syntax: LogFormat format|nickname [nickname]'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.143 NAME 'ApacheTransferLog'
+	DESC 'Syntax: TransferLog file|pipe'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.30 NAME 'ApacheModLogConfigObj'
+	DESC 'Contains configuration directives for mod_log_config'
+	SUP ApacheConfigObj AUXILIARY
+	MAY ( ApacheCookieLog $ ApacheCustomLog $ ApacheLogFormat $
+		 ApacheTransferLog ) )
+
+####################
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.144 NAME 'ApacheRefererIgnore'
+	DESC 'Syntax: RefererIgnore string [string] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.145 NAME 'ApacheRefererLog'
+	DESC 'Syntax: RefererLog file-pipe'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.31 NAME 'ApacheModLogRefererObj'
+	DESC 'Contains configuration directives for mod_log_referer'
+	SUP ApacheConfigObj AUXILIARY
+	MAY ( ApacheRefererIgnore $ ApacheRefererLog ) )
+
+####################
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.146 NAME 'ApacheAddCharset'
+	DESC 'Syntax: AddCharset charset extension [extension] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.147 NAME 'ApacheAddEncoding'
+	DESC 'Syntax: AddEncoding MIME-enc extension [extension] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.148 NAME 'ApacheAddHandler'
+	DESC 'Syntax: AddHandler handler-name extension [extension] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.149 NAME 'ApacheAddLanguage'
+	DESC 'Syntax: AddLanguage MIME-lang extension [extension] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.150 NAME 'ApacheAddType'
+	DESC 'Syntax: AddType MIME-type extension [extension] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.151 NAME 'ApacheDefaultLanguage'
+	DESC 'Syntax: DefaultLanguage MIME-lang'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.152 NAME 'ApacheForceType'
+	DESC 'Syntax: ForceType media-type'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.153 NAME 'ApacheRemoveEncoding'
+	DESC 'Syntax: RemoveEncoding extension [extension] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.154 NAME 'ApacheRemoveHandler'
+	DESC 'Syntax: RemoveHandler extension [extension] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.155 NAME 'ApacheRemoveType'
+	DESC 'Syntax: RemoveType extension [extension] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.156 NAME 'ApacheSetHandler'
+	DESC 'Syntax: SetHandler handler-name'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.157 NAME 'ApacheTypesConfig'
+	DESC 'Syntax: TypesConfig file-path'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.32 NAME 'ApacheModMimeObj'
+	DESC 'Contains configuration directives for mod_mime'
+	SUP ApacheConfigObj AUXILIARY
+	MAY ( ApacheAddCharset $ ApacheAddEncoding $ ApacheAddHandler $
+		 ApacheAddLanguage $ ApacheAddType $ ApacheDefaultLanguage $
+		 ApacheForceType $ ApacheRemoveEncoding $ ApacheRemoveHandler $
+		 ApacheRemoveType $ ApacheSetHandler $ ApacheTypesConfig ) )
+
+####################
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.158 NAME 'ApacheMimeMagicFile'
+	DESC 'Syntax: MimeMagicFile file-path'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.33 NAME 'ApacheModMimeMagicObj'
+	DESC 'Contains configuration directives for mod_mime_magic'
+	SUP ApacheConfigObj AUXILIARY
+	MAY ApacheMimeMagicFile )
+
+####################
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.159 NAME 'ApacheMMapFile'
+	DESC 'Syntax: MMapFile filename [filename] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.34 NAME 'ApacheModMmapStaticObj'
+	DESC 'Contains configuration directives for mod_mmap_static'
+	SUP ApacheConfigObj AUXILIARY
+	MAY ApacheMMapFile )
+
+####################
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.160 NAME 'ApacheCacheNegotiatedDocs'
+	DESC 'Syntax: CacheNegotiatedDocs'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.161 NAME 'ApacheLanguagePriority'
+	DESC 'Syntax: LanguagePriority MIME-lang [MIME-lang] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.35 NAME 'ApacheModNegotiationObj'
+	DESC 'Contains configuration directives for mod_negotiation'
+	SUP ApacheConfigObj AUXILIARY
+	MAY ( ApacheCacheNegotiatedDocs $ ApacheLanguagePriority ) )
+
+####################
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.162 NAME 'ApacheAllowCONNECT'
+	DESC 'Syntax: AllowCONNECT port [port] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.163 NAME 'ApacheCacheDefaultExpire'
+	DESC 'Syntax: CacheDefaultExpire hours'
+	EQUALITY integerMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.164 NAME 'ApacheCacheDirLength'
+	DESC 'Syntax: CacheDirLength length'
+	EQUALITY integerMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.165 NAME 'ApacheCacheDirLevels'
+	DESC 'Syntax: CacheDirLevels levels'
+	EQUALITY integerMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.166 NAME 'ApacheCacheForceCompletion'
+	DESC 'Syntax: CacheForceCompletion percentage'
+	EQUALITY integerMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.167 NAME 'ApacheCacheGcInterval'
+	DESC 'Syntax: CacheGcInterval hours'
+	EQUALITY integerMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.168 NAME 'ApacheCacheLastModifiedFactor'
+	DESC 'Syntax: CacheLastModifiedFactor factor'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.169 NAME 'ApacheCacheMaxExpire'
+	DESC 'Syntax: CacheMaxExpire hours'
+	EQUALITY integerMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.170 NAME 'ApacheCacheRoot'
+	DESC 'Syntax: CacheRoot directory'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.171 NAME 'ApacheCacheSize'
+	DESC 'Syntax: CacheSize kilobytes'
+	EQUALITY integerMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.172 NAME 'ApacheNoCache'
+	DESC 'Syntax: NoCache *|word|host|domain [word|host|domain] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.173 NAME 'ApacheNoProxy'
+	DESC 'Syntax: NoProxy NoProxy Domain|SubNet|IpAddr|Hostname [Domain|SubNet|IpAddr|Hostname] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.174 NAME 'ApacheProxyBlock'
+	DESC 'Syntax: ProxyBlock *|word|host|domain [word|host|domain] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.175 NAME 'ApacheProxyDomain'
+	DESC 'Syntax: ProxyDomain Domain'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.176 NAME 'ApacheProxyIOBufferSize'
+	DESC 'Syntax: ProxyIOBufferSize bytes'
+	EQUALITY integerMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.177 NAME 'ApacheProxyPass'
+	DESC 'Syntax: ProxyPass path url'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.178 NAME 'ApacheProxyPassReverse'
+	DESC 'Syntax: ProxyPassReverse path url'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.179 NAME 'ApacheProxyReceiveBufferSize'
+	DESC 'Syntax: ProxyReceiveBufferSize bytes'
+	EQUALITY integerMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.180 NAME 'ApacheProxyRemote'
+	DESC 'Syntax: ProxyRemote match remote-server'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.181 NAME 'ApacheProxyRequests'
+	DESC 'Syntax: ProxyRequests on|off'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.182 NAME 'ApacheProxyVia'
+	DESC 'Syntax: ProxyVia on|off|full|block'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.36 NAME 'ApacheModProxyObj'
+	DESC 'Contains configuration directives for mod_proxy'
+	SUP ApacheConfigObj AUXILIARY
+	MAY ( ApacheAllowCONNECT $ ApacheCacheDefaultExpire $ ApacheCacheDirLength $
+		 ApacheCacheDirLevels $ ApacheCacheForceCompletion $ ApacheCacheGcInterval $
+		 ApacheCacheLastModifiedFactor $ ApacheCacheMaxExpire $ ApacheCacheRoot $
+		 ApacheCacheSize $ ApacheNoCache $ ApacheNoProxy $
+		 ApacheProxyBlock $ ApacheProxyDomain $ ApacheProxyIOBufferSize $
+		 ApacheProxyPass $ ApacheProxyPassReverse $ ApacheProxyReceiveBufferSize $
+		 ApacheProxyRemote $ ApacheProxyRequests $ ApacheProxyVia ) )
+
+####################
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.183 NAME 'ApacheRewriteBase'
+	DESC 'Syntax: RewriteBase URL-path'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.184 NAME 'ApacheRewriteCond'
+	DESC 'Syntax: RewriteCond TestString CondPattern'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.185 NAME 'ApacheRewriteEngine'
+	DESC 'Syntax: RewriteEngine on|off'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.186 NAME 'ApacheRewriteLock'
+	DESC 'Syntax: RewriteLock file-path'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.187 NAME 'ApacheRewriteLog'
+	DESC 'Syntax: RewriteLog file-path'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.188 NAME 'ApacheRewriteLogLevel'
+	DESC 'Syntax: RewriteLogLevel Level'
+	EQUALITY integerMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.189 NAME 'ApacheRewriteMap'
+	DESC 'Syntax: RewriteMap MapName MapType:MapSource'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.190 NAME 'ApacheRewriteOptions'
+	DESC 'Syntax: RewriteOptions Option'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.191 NAME 'ApacheRewriteRule'
+	DESC 'Syntax: RewriteRule Pattern Substitution'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.37 NAME 'ApacheModRewriteObj'
+	DESC 'Contains configuration directives for mod_rewrite'
+	SUP ApacheConfigObj AUXILIARY
+	MAY ( ApacheRewriteBase $ ApacheRewriteCond $ ApacheRewriteEngine $
+		 ApacheRewriteLock $ ApacheRewriteLog $ ApacheRewriteLogLevel $
+		 ApacheRewriteMap $ ApacheRewriteOptions $ ApacheRewriteRule ) )
+
+####################
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.192 NAME 'ApacheBrowserMatch'
+	DESC 'Syntax: BrowserMatch regex env-variable[=value] [env-variable[=value]] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.193 NAME 'ApacheBrowserMatchNoCase'
+	DESC 'Syntax: BrowserMatchNoCase regex env-variable[=value] [env-variable[=value]] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.194 NAME 'ApacheSetEnvIf'
+	DESC 'Syntax: SetEnvIf attribute regex env-variable[=value] [env-variable[=value]] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.195 NAME 'ApacheSetEnvIfNoCase'
+	DESC 'Syntax: SetEnvIfNoCase attribute regex env-variable[=value] [env-variable[=value]] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.38 NAME 'ApacheModSetenvifObj'
+	DESC 'Contains configuration directives for mod_setenvif'
+	SUP ApacheConfigObj AUXILIARY
+	MAY ( ApacheBrowserMatch $ ApacheBrowserMatchNoCase $ ApacheSetEnvIf $
+		 ApacheSetEnvIfNoCase ) )
+
+####################
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.196 NAME 'ApacheLoadFile'
+	DESC 'Syntax: LoadFile filename [filename] ...'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.197 NAME 'ApacheLoadModule'
+	DESC 'Syntax: LoadModule module filename'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.39 NAME 'ApacheModSoObj'
+	DESC 'Contains configuration directives for mod_so'
+	SUP ApacheConfigObj AUXILIARY
+	MAY ( ApacheLoadFile $ ApacheLoadModule ) )
+
+####################
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.198 NAME 'ApacheCheckSpelling'
+	DESC 'Syntax: CheckSpelling on|off'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.40 NAME 'ApacheModSpelingObj'
+	DESC 'Contains configuration directives for mod_speling'
+	SUP ApacheConfigObj AUXILIARY
+	MAY ApacheCheckSpelling )
+
+####################
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.199 NAME 'ApacheExtendedStatus'
+	DESC 'Syntax: ExtendedStatus On|Off'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.41 NAME 'ApacheModStatusObj'
+	DESC 'Contains configuration directives for mod_status'
+	SUP ApacheConfigObj AUXILIARY
+	MAY ApacheExtendedStatus )
+
+####################
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.200 NAME 'ApacheUserDir'
+	DESC 'Syntax: UserDir directory-filename'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.42 NAME 'ApacheModUserdirObj'
+	DESC 'Contains configuration directives for mod_userdir'
+	SUP ApacheConfigObj AUXILIARY
+	MAY ApacheUserDir )
+
+####################
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.201 NAME 'ApacheCookieDomain'
+	DESC 'Syntax: CookieDomain domain'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.202 NAME 'ApacheCookieExpires'
+	DESC 'Syntax: CookieExpires expiry-period'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.203 NAME 'ApacheCookieName'
+	DESC 'Syntax: CookieName token '
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.204 NAME 'ApacheCookieStyle'
+	DESC 'Syntax: CookieStyle Netscape|Cookie|Cookie2|RFC2109|RFC2965'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.205 NAME 'ApacheCookieTracking'
+	DESC 'Syntax: CookieTracking on|off'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+objectclass ( 1.3.6.1.4.1.13607.1.1.1.1.43 NAME 'ApacheModUsertrackObj'
+	DESC 'Contains configuration directives for mod_usertrack'
+	SUP ApacheConfigObj AUXILIARY
+	MAY ( ApacheCookieDomain $ ApacheCookieExpires $ ApacheCookieName $
+		 ApacheCookieStyle $ ApacheCookieTracking ) )
+
+####################
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.206 NAME 'ApacheVirtualDocumentRoot'
+	DESC 'Syntax: VirtualDocumentRoot interpolated-directory'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.207 NAME 'ApacheVirtualDocumentRootIP'
+	DESC 'Syntax: VirtualDocumentRootIP interpolated-directory'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.208 NAME 'ApacheVirtualScriptAlias'
+	DESC 'Syntax: VirtualScriptAlias interpolated-directory'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.13607.1.1.1.2.209 NAME 'ApacheVirtualScriptAliasIP'
+	DESC 'Syntax: VirtualScriptAliasIP interpolated-directory'
+	EQUALITY caseExactIA5Match
+	SUBSTR caseExactIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
